@@ -1,17 +1,19 @@
 extern "llvm" {
-    fn LLVMContextCreate(): i64,
-    fn LLVMModuleCreateWithNameInContext(ctx: i64, name: str): i64,
-    fn LLVMCreateBuilderInContext(ctx: i64): i64,
-    fn LLVMAddFunction(module: i64, content: str, function_type: i64): i64,
-    fn LLVMAppendBasicBlockInContext(context: i64, func: i64, content: str): i64,
-    fn LLVMPositionBuilderAtEnd(builder: i64, block: i64),
-    fn LLVMBuildAdd(builder: i64, arg2: i64, arg3: i64, content: str): i64,
-    fn LLVMBuildRet(builder: i64, sum: i64),
-    fn LLVMDumpModule(module: i64),
+    // Core
     fn LLVMShutdown(),
-    fn LLVMSetFunctionCallConv(func: i64, value: i64),
-    fn LLVMGetParam(func: i64, value: i32): i64,
-    //types
+    fn LLVMCreateMessage(msg: str): i64,
+    fn LLVMDisposeMessage(msg: str),
+
+    // Core -> Contexts
+    fn LLVMContextCreate(): i64,
+    fn LLVMGetGlobalContext(): i64,
+    fn LLVMContextDispose(ctx: i64),
+
+    // Core -> Modules
+    fn LLVMModuleCreateWithName(name: str): i64,
+    fn LLVMModuleCreateWithNameInContext(ctx: i64, name: str): i64,
+
+    // Core -> Types
     fn LLVMInt1TypeInContext(ctx: i64): i64,
     fn LLVMInt8TypeInContext(ctx: i64): i64,
     fn LLVMInt16TypeInContext(ctx: i64): i64,
@@ -19,11 +21,32 @@ extern "llvm" {
     fn LLVMInt64TypeInContext(ctx: i64): i64,
     fn LLVMPointerType(_type: i64, arg: i32): i64,
     fn LLVMFunctionType(_type: i64, length: i32, a2: i32): i64,
-    fn LLVMConstInt(_type: i64, arg1: i32, arg2: i32): i64,
     fn LLVMInt1Type(): i64,
     fn LLVMInt8Type(): i64,
     fn LLVMInt16Type(): i64,
     fn LLVMInt32Type(): i64,
     fn LLVMInt64Type(): i64,
     fn LLVMInt128Type(arg: i32): i64,
+
+    // Core -> Modules
+    fn LLVMAddFunction(module: i64, content: str, function_type: i64): i64,
+
+    // Core -> Instruction Builders
+    fn LLVMCreateBuilder(): i64,
+    fn LLVMCreateBuilderInContext(ctx: i64): i64,
+    fn LLVMDisposeBuilder(builder: i64),
+    fn LLVMPositionBuilderAtEnd(builder: i64, block: i64),
+    fn LLVMBuildRetVoid(builder: i64),
+    fn LLVMBuildRet(builder: i64, sum: i64),
+    fn LLVMDumpModule(module: i64),
+    fn LLVMBuildAdd(builder: i64, arg2: i64, arg3: i64, content: str): i64,
+
+    // Core->Values->Constants->Scalar
+    fn LLVMConstInt(_type: i64, arg1: i32, arg2: i32): i64,
+
+    // Core -> Basic Block
+    fn LLVMAppendBasicBlockInContext(context: i64, func: i64, content: str): i64,
+    fn LLVMSetFunctionCallConv(func: i64, value: i64),
+    fn LLVMGetParam(func: i64, value: i32): i64,
+    fn LLVMLoadLibraryPermanently(filename: str): i32,
 }

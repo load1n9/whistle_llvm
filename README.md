@@ -1,6 +1,6 @@
 # whistle_llvm
-llvm c interface for whistle (experiment)
 
+llvm c interface for whistle (experiment)
 
 ## Usage
 

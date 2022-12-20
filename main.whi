@@ -10,7 +10,6 @@ export fn main() {
     var func: i64 = LLVMAddFunction(module, "main\0", func_type)
     var test: i64 = 0
     LLVMSetFunctionCallConv(func, test)
-
     var entry: i64 = LLVMAppendBasicBlockInContext(context, func, "entry\0")
     LLVMPositionBuilderAtEnd(builder, entry)
     var sum: i64 = LLVMBuildAdd(builder, LLVMConstInt(i64t, 1, 0), LLVMConstInt(i64t, 2, 0), "sum\0")
